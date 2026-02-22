@@ -63,3 +63,11 @@ After pairing the device with Home Assistant via the ESPHome integration, you’
 * Extended and adapted for XY6509X / SK150
 * Added broader register coverage and memory-group editing support
 
+__________
+
+<img width="262" height="795" alt="Screenshot 2026-02-22 at 18 05 49" src="https://github.com/user-attachments/assets/4046e4b7-2310-411e-883e-b6a9ff60edb4" />
+<img width="260" height="795" alt="Screenshot 2026-02-22 at 18 05 59" src="https://github.com/user-attachments/assets/16ef1cf3-517b-4470-b2c6-faa28eed9dda" />
+<img width="261" height="876" alt="Screenshot 2026-02-22 at 18 06 17" src="https://github.com/user-attachments/assets/2c014f7a-d0fc-4644-8fd3-1a57d341045e" />
+<img width="265" height="572" alt="Screenshot 2026-02-22 at 18 06 36" src="https://github.com/user-attachments/assets/ec40bd4c-439d-4bd0-ba3b-cb2b7f2ae6b0" />
+<img width="524" height="546" alt="1" src="https://github.com/user-attachments/assets/a69d0435-908c-464f-a3e7-50f42b6d7317" />
+<img width="720" height="532" alt="2" src="https://github.com/user-attachments/assets/f475bc25-df30-41d1-a04b-7202ea8704aa" />
