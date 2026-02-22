@@ -51,7 +51,7 @@ After pairing the device with Home Assistant via the ESPHome integration, you’
 
 2. Controls / Memory groups (M0–M9) editing
    Adds convenient editing of the PSU’s memory groups.
-   Those are the settings you’d normally reach via the PSU’s “I-SET"-Button long press  menu
+   Those are the settings you’d normally reach via the PSU’s “I-SET"-Button long press menu. 
    In Home Assistant:
 
 * Select which memory group you want to edit using **“Memory group to edit”** (M0…M9)
@@ -62,6 +62,7 @@ After pairing the device with Home Assistant via the ESPHome integration, you’
 * Originally based on `framenic/sinilink-modbus`
 * Extended and adapted for XY6509X / SK150
 * Added broader register coverage and memory-group editing support
+* I mostly used the register addresses documented here for the XY-SK60: https://www.mikrocontroller.net/attachment/641206/Powermodule_XY-SK60_Mosbus_protocol_english.pdf
 
 __________
 
