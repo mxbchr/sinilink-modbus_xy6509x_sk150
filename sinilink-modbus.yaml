@@ -1,11 +1,12 @@
 substitutions:
 
   ### Change this model to fit your particular one.
-  ### i.e.: "xy6509x"; "sk150"
-  model: "xy6509x" 
+  ### i.e.: "xy6509x"; "xysk150"; "xysk120"; "xysk60"
+  model: "xysk150" 
 
 ###############################
 ###############################
+# Documentation for similar XY-SK60 here: https://www.mikrocontroller.net/attachment/641206/Powermodule_XY-SK60_Mosbus_protocol_english.pdf
 ###############################
 
   devicename: "sinilink-${model}"
@@ -16,7 +17,7 @@ substitutions:
   ######### Model specific settings ########
 
   ################
-  ### XY6509X ####
+  ### XY6509X #### tested
   ################
   xy6509x_voltage_maximum: "65"
   xy6509x_voltage_accuracy: "2"
@@ -34,27 +35,76 @@ substitutions:
   xy6509x_sovp: "67"
   xy6509x_socp: "9.2"
   xy6509x_sopp: "650"
-  ############### Documentation for similar XY-SK60 here: https://www.mikrocontroller.net/attachment/641206/Powermodule_XY-SK60_Mosbus_protocol_english.pdf
+  xy6509x_sowh: "4200000"
+  xy6509x_soha: "9999"
+  
+  #################
+  ### XY-SK150 #### tested
+  #################
+  xysk150_voltage_maximum: "36.5"
+  xysk150_voltage_accuracy: "2"
+  xysk150_voltage_multiplier: "0.01"
+  xysk150_current_maximum: "7.1"
+  xysk150_current_accuracy: "3"
+  xysk150_current_multiplier: "0.001"
+  xysk150_power_multiplier: "0.01"
+  xysk150_power_maximum: "150"
+  xysk150_power_accuracy: "3"
+  xysk150_temp_multiplier: "0.1"
+  xysk150_temp_accuracy: "1"
+  xysk150_slvp_l: "5.5"
+  xysk150_slvp_h: "38"
+  xysk150_sovp: "38"
+  xysk150_socp: "7.2"
+  xysk150_sopp: "180"
+  xysk150_sowh: "4200000"
+  xysk150_soha: "9999"
 
-  ##############
-  ### SK150 ####
-  ##############
-  sk150_voltage_maximum: "36.5"
-  sk150_voltage_accuracy: "2"
-  sk150_voltage_multiplier: "0.01"
-  sk150_current_maximum: "7.1"
-  sk150_current_accuracy: "3"
-  sk150_current_multiplier: "0.001"
-  sk150_power_multiplier: "0.01"
-  sk150_power_maximum: "150"
-  sk150_power_accuracy: "3"
-  sk150_temp_multiplier: "0.1"
-  sk150_temp_accuracy: "1"
-  sk150_slvp_l: "5.5"
-  sk150_slvp_h: "38"
-  sk150_sovp: "38"
-  sk150_socp: "7.2"
-  sk150_sopp: "180"
+  #################
+  ### XY-SK120 #### untested - according to datasheet
+  #################
+  xysk120_voltage_maximum: "36"
+  xysk120_voltage_accuracy: "2"
+  xysk120_voltage_multiplier: "0.01"
+  xysk120_current_maximum: "6"
+  xysk120_current_accuracy: "3"
+  xysk120_current_multiplier: "0.001"
+  xysk120_power_multiplier: "0.01"
+  xysk120_power_maximum: "120"
+  xysk120_power_accuracy: "3"
+  xysk120_temp_multiplier: "0.1"
+  xysk120_temp_accuracy: "1"
+  xysk120_slvp_l: "5.5"
+  xysk120_slvp_h: "36"
+  xysk120_sovp: "38"
+  xysk120_socp: "6.2"
+  xysk120_sopp: "150"
+  xysk120_sowh: "4200000"
+  xysk120_soha: "9999"
+
+  #################
+  ### XY-SK60 #### untested - according to datasheet
+  #################
+  xysk60_voltage_maximum: "36"
+  xysk60_voltage_accuracy: "2"
+  xysk60_voltage_multiplier: "0.01"
+  xysk60_current_maximum: "5"
+  xysk60_current_accuracy: "3"
+  xysk60_current_multiplier: "0.001"
+  xysk60_power_multiplier: "0.01"
+  xysk60_power_maximum: "60"
+  xysk60_power_accuracy: "3"
+  xysk60_temp_multiplier: "0.1"
+  xysk60_temp_accuracy: "1"
+  xysk60_slvp_l: "5.5"
+  xysk60_slvp_h: "36"
+  xysk60_sovp: "38"
+  xysk60_socp: "5.2"
+  xysk60_sopp: "80"
+  xysk60_sowh: "4200000"
+  xysk60_soha: "9999"
+
+###############################
 
 esphome:
 
@@ -64,7 +114,7 @@ esphome:
   name_add_mac_suffix: false
   project:
     name: sinilink.${devicename}
-    version: "2.0.1"
+    version: "2.1.1"
   platformio_options:
     board_build.mcu: esp32c3
     board_build.variant: esp32c3  
@@ -452,9 +502,9 @@ sensor:
     address: 8
     register_type: holding
     value_type: U_DWORD_R   # 8=low, 9=high
-    accuracy_decimals: ${${model}_power_accuracy}
     state_class: measurement
     unit_of_measurement: "Wh"
+    accuracy_decimals: ${${model}_power_accuracy}
     filters:
       - multiply: ${${model}_power_multiplier}
 
@@ -965,9 +1015,8 @@ number:
     unit_of_measurement: "Ah"
     device_class: current
     min_value: 0
-    max_value: 9.999
+    max_value: ${${model}_soha}
     step: ${${model}_current_multiplier}
-    #optimistic: true
     set_action:
       - lambda: |-
           auto *ctl = id(powersupply);
@@ -997,7 +1046,7 @@ number:
     unit_of_measurement: "Wh"
     device_class: power
     min_value: 0
-    max_value: 99.99
+    max_value: ${${model}_sowh}
     step: ${${model}_power_multiplier}
     optimistic: true
     set_action:
@@ -1082,9 +1131,9 @@ select:
 
   - platform: modbus_controller
     modbus_controller_id: powersupply
-    name: "Quick Recall Data Groups"
+    name: "Memory Group to recall"
     id: "EXTRACT_M"
-    entity_category: config
+    #entity_category: config
     address: 29
     value_type: U_WORD
     optionsmap:
@@ -1219,16 +1268,6 @@ switch:
     entity_category: config
 
 button:
-
-  - platform: template
-    name: "Recall edited group on device"
-    id: "recall"
-    on_press:
-      - lambda: |-
-          auto *ctl = id(powersupply);
-          auto cmd = esphome::modbus_controller::ModbusCommandItem::create_write_single_command(
-              ctl, 0x001D, (uint16_t) id(mem_edit_group));  // EXTRACT-M :contentReference[oaicite:23]{index=23}
-          ctl->queue_command(cmd);
 
   - platform: template
     name: "PSU Reset"
