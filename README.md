@@ -1,12 +1,14 @@
-# ESPHome Sinilink Power Supply (XY6509X / SK150) Modbus Integration
+# ESPHome Sinilink Power Supply (XY6509X / XY-SK150) Modbus Integration
 
 This project brings Sinilink / bench power supplies to ESPHome (and therefore Home Assistant) via Modbus over UART. It’s intended for supplies like the **Sinlink XY6509X** and **SK150**, and it effectively mimics the functionality of the optional OEM Wi-Fi add-on module (often sold as **XY-WFPOW**) by speaking Modbus directly from an ESP device.
 
 ## Supported devices
 
 * XY6509X (tested)
-* SK150 (tested)
-* Other Sinlink PSUs may work if they use the same Modbus protocol/registers, but you’ll likely need to add a model-specific substitutions table for scaling/limits.
+* XY-SK150 (tested)
+* XY-SK120 (untested)
+* XY-SK60 (untested)
+* Other similar Sinlink PSUs may work if they use the same Modbus protocol/registers, but you’ll likely need to add a model-specific substitutions table for scaling/limits.
 
 ## Hardware wiring
 
